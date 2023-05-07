@@ -6,13 +6,13 @@ It provides for up to 3 independent voltage inputs and up to 12 current inputs, 
 
 This document has the following main sections:
 
-- [Key Properties – important points about this library](#KeyProperties)
-- [Using EmonLib](#UsingEmonLibCM)[DB](#UsingEmonLibCM)[– a very brief explanation of how to use this library](#UsingEmonLibCM)
-- [List of required supporting libraries](#REQUIREDLIBRARIES)
-- [Initial configuration](#_toc132)
-- [Calibration notes](#CALIBRATION)
+- Key Properties – important points about this library
+- Using EmonLibDB – a very brief explanation of how to use this library
+- List of required supporting libraries
+- Initial configuration
+- Calibration notes
 - Example Sketches
-- [Alphabetical index of Application Interface functions](#INDEX)
+- Alphabetical index of Application Interface functions
 
 ## ​Key Properties
 
