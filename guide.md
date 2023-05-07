@@ -51,15 +51,15 @@ The way settings are made is significantly different to previous versions of emo
 
 All settings are made with a "setter" function.For example, the default setting for the first voltage input is number 1, the amplitude calibration is 100, and the phase error is 0.16° This would be set as:
 
-    EmonLibDB\_set\_vInput(1, 100, 0.16);
+    EmonLibDB_set_vInput(1, 100, 0.16);
 
 Using the 3rd current input will need, for a 100 A c.t. an amplitude calibration of 100 (i.e. the c.t's rated current) and a phase error of 1.4°, which would be set as:
 
-    EmonLibDB\_set\_cInput(3, 100, 1.4);
+    EmonLibDB_set_cInput(3, 100, 1.4);
 
 To link those together and read the power, set:
 
-    EmonLibDB\_set\_pChannel(3, 1);
+    EmonLibDB_set_pChannel(3, 1);
 
 A list of all available setter functions, and a description of what they do, follows in the Application Interface sections.
 
@@ -67,13 +67,13 @@ A list of all available setter functions, and a description of what they do, fol
 
 The function
 
-    EmonLibDB\_Ready( );
+    EmonLibDB_Ready( );
 
 must be called very frequently inside **loop( )**. If no new data is ready, this returns immediately with the value **false**. If however new data is ready, it returns the value **true** and you may then use the "getter" functions to retrieve the data. For example, to retrieve the real power measured on channel 3 (CT3 & Voltage 1 in the example above) and
 
 assign the value to the floating point variable power3, you would use:
 
-    power3 = EmonLibDB\_getRealPower(3);
+    power3 = EmonLibDB_getRealPower(3);
 
 A list of all available getter functions, and a description of what they do, follows in the Application Interface sections.
 
