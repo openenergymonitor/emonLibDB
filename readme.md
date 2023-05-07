@@ -1,3 +1,5 @@
+# EmonLibDB
+
 The emonLibDB library here is mirrored from Robert Wall's release thread on the OpenEnergyMonitor forums here [OpenEnergyMonitor Forum: EmonLibDB](https://community.openenergymonitor.org/t/emonlibdb-version-1-0-0/23535).
 
 ---
@@ -36,14 +38,14 @@ Three example sketches are provided as part of the distribution:
 
 The EmonLibDB library is not a direct replacement for the modified versions of emonLibCM for the emonTx4.
 
-**Acknowledgements.**
-Jörg Becker (@joergbecker32) for his background work on interrupts and the ADC.
-Robin Emley (@calypso_rae) for his energy diverter software, from which the major part of the library was derived by @TrystanLea 
-@ursi (Andries) and @mafheldt (Mike Afheldt) for suggestions made at https://community.openenergymonitor.org/t/emonlib-inaccurate-power-factor/3790 and https://community.openenergymonitor.org/t/rms-calculations-in-emonlib-and-learn-documentation/3749/3
-Angus Logan (@awjlogan) for his suggestions regarding memory use
-Dr.C B Markwardt (@cbmarkwardt)for his suggestion to use the AVR Hardware Multiplier, and to @dBC for reminding me.
+## Acknowledgements
 
-&nbsp;
+Jörg Becker (@joergbecker32) for his background work on interrupts and the ADC.<br>
+Robin Emley (@calypso_rae) for his energy diverter software, from which the major part of the library was derived by @TrystanLea<br>
+@ursi (Andries) and @mafheldt (Mike Afheldt) for suggestions made at https://community.openenergymonitor.org/t/emonlib-inaccurate-power-factor/3790 and https://community.openenergymonitor.org/t/rms-calculations-in-emonlib-and-learn-documentation/3749/3<br>
+Angus Logan (@awjlogan) for his suggestions regarding memory use<br>
+Dr.C B Markwardt (@cbmarkwardt)for his suggestion to use the AVR Hardware Multiplier, and to @dBC for reminding me.<br>
 
+## Support
 
 Please see [emonLibDB (Support)](https://community.openenergymonitor.org/t/emonlibdb-support/23536) to comment or request support.
