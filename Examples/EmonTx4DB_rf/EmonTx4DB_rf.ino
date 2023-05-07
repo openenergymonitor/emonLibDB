@@ -49,13 +49,13 @@ struct {
 } txPacket1;
 
 /*  52 bytes
-[[10]]
+[[17]]
     nodename = emonTx4_17
     [[[rx]]]
         names = MSG, Vrms1, Vrms2, Vrms3, P1, P2, P3, P4, P5, P6, E1, E2, E3, E4, E5, E6, pulse, Analog
         datacodes = L, h, h, h, h, h, h, h, h, h, l, l, l, l, l, l, L, H
-        scales = 1.0, 0.01, 0.01, 0.01, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.01, 0.01, 0.01, 1.0, 1.0
-        units = n, V, V, V, W, W, W, W, W, W, Wh, Wh, Wh, Wh, Wh, Wh, C, C, C, p, n
+        scales = 1.0, 0.01, 0.01, 0.01, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0
+        units = n, V, V, V, W, W, W, W, W, W, Wh, Wh, Wh, Wh, Wh, Wh, p, n
 */
         
 uint16_t NodeID2 = 18;
@@ -67,7 +67,7 @@ struct {
 } txPacket2;
 
 /*  52 bytes
-[[11]]
+[[18]]
     nodename = emonTx4_18
     [[[rx]]]
         names = MSG, Vrms2, Vrms3, P7, P8, P9, P10, P11, P12, E7, E8, E9, E10, E11, E12, digPulse, anaPulse
@@ -97,6 +97,7 @@ void setup()
   *                                                                           *
   ****************************************************************************/
   
+  rf.setPins(PIN_PB5,PIN_PC0,PIN_PC1,PIN_PC2);
   if(rf.initialize(RF69_433MHZ, NodeID1, networkGroup))
   {
     rfHealthy = true;
@@ -193,8 +194,8 @@ void setup()
 */      
   EmonLibDB_setPulseEnable(true);              // Enable counting on the "Pulse" input
   EmonLibDB_setPulseMinPeriod(20);             // Contact bounce must not last longer than 20 ms
-  EmonLibDB_setPulseEnable(Dig, true);         // Enable counting on the "Pulse" input
-  EmonLibDB_setPulseMinPeriod(Dig, 20);        // Contact bounce must not last longer than 20 ms
+  // EmonLibDB_setPulseEnable(Dig, true);         // Enable counting on the "Pulse" input
+  // EmonLibDB_setPulseMinPeriod(Dig, 20);        // Contact bounce must not last longer than 20 ms
 
   EmonLibDB_datalogPeriod(DATALOG);            // Report every 9.8 s (approx)
   Serial.print("Starting ");
