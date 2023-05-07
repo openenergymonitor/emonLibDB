@@ -24,9 +24,6 @@ To install using git, navigate to your Arduino libraries directory and install u
 
     git clone https://github.com/openenergymonitor/emonLibDB
 
-### PlatformIO
-
-Firmware examples with platformio configuration files will automatically pull in the required libraries including this one. Example firmwares with platformio configuration files to be added shortly.
 
 ## USING THE LIBRARY
 
