@@ -245,13 +245,13 @@ Three example sketches are provided.
 **EmonTx4DB\_min.ino**<br>
 This is the absolute minimum sketch that is needed to use the library. As the comment at the beginning of the sketch states, the sketch assumes that all the default values for the emonTx V3.4 are applicable, that no input calibration is required, the mains frequency is 50 Hz and the data logging period interval is 10 s, pulse counting is not required, and that 6 'standard' 100 A CTs and the emonVs power supply/monitor from the OEM Shop are being used as the input sensors.
 
-This should be your starting point for using the library. If you find that you need to adjust any of the default settings, consult the Application Interface section and then copy the appropriate function either from there or from the full sketch `EmonTxV34DB\_max.ino`, changing parameters as necessary.
+This should be your starting point for using the library. If you find that you need to adjust any of the default settings, consult the Application Interface section and then copy the appropriate function either from there or from the full sketch **EmonTxV34DB\_max.ino**, changing parameters as necessary.
 
 **EmonTx4DB\_max.ino**<br>
 This provides an example of every Application Interface function. Many will be redundant in normal circumstances as they simply set again the default parameters, many of which are likely to be correct and will not need changing. If you do need to change a value, the Application Interface section above gives full details.
 
 **EmonTx4DB\_rf.ino**<br>
-This provides an example of 12 power and energy values being sent in two radio packets using two NodeIDs. Particular attention should be paid to the number of retries and the timing of and between the calls to `rf.sendWithRetry(… )`
+This provides an example of 12 power and energy values being sent in two radio packets using two NodeIDs. Particular attention should be paid to the number of retries and the timing of and between the calls to **rf.sendWithRetry(… )**
 
 ## Alphabetical Index of Application Interface Functions
 
