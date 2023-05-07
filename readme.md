@@ -35,6 +35,8 @@ Three example sketches are provided as part of the distribution:
 
 The EmonLibDB library is not a direct replacement for the modified versions of emonLibCM for the emonTx4.
 
+## [User Guide](guide.md)
+
 ## Acknowledgements
 
 Jörg Becker (@joergbecker32) for his background work on interrupts and the ADC.<br>
