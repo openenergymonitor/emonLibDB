@@ -39,7 +39,7 @@ bool rfHealthy = false;
 uint16_t networkGroup = 210;
 uint16_t baseID = 5;
 
-uint16_t NodeID1 = 17;
+uint16_t NodeID1 = 28;
 struct {
     uint32_t Msg;
     int16_t V1,V2,V3,P1,P2,P3,P4,P5,P6; 
@@ -49,8 +49,8 @@ struct {
 } txPacket1;
 
 /*  52 bytes
-[[17]]
-    nodename = emonTx4_17
+[[28]]
+    nodename = emonTx4_28
     [[[rx]]]
         names = MSG, Vrms1, Vrms2, Vrms3, P1, P2, P3, P4, P5, P6, E1, E2, E3, E4, E5, E6, pulse, Analog
         datacodes = L, h, h, h, h, h, h, h, h, h, l, l, l, l, l, l, L, H
@@ -58,7 +58,7 @@ struct {
         units = n, V, V, V, W, W, W, W, W, W, Wh, Wh, Wh, Wh, Wh, Wh, p, n
 */
         
-uint16_t NodeID2 = 18;
+uint16_t NodeID2 = 29;
 struct {
     uint32_t Msg;
     int16_t V2,V3,P7,P8,P9,P10,P11,P12; 
@@ -67,8 +67,8 @@ struct {
 } txPacket2;
 
 /*  52 bytes
-[[18]]
-    nodename = emonTx4_18
+[[29]]
+    nodename = emonTx4_29
     [[[rx]]]
         names = MSG, Vrms2, Vrms3, P7, P8, P9, P10, P11, P12, E7, E8, E9, E10, E11, E12, digPulse, anaPulse
         datacodes = L, h, h, h, h, h, h, h, h, l, l, l, l, l, l, L, L
