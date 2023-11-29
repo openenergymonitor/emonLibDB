@@ -19,11 +19,15 @@
 //   @cbmarkwardt & @dBC for his suggestion to use the AVR Hardware Multiplier.
 
 
-// Version 1.0.0 6/5/2023 
+// Version 1.0.0 6/5/2023 Initial public release
+// Version 1.0.1 25/11/2023  Hardware 'Fast Multiply' removed - found to be slower. 
+//   ADC0SampLenLineNeutral was 21, ADC0SampLenLineLine was 19. No change to user interface. 
+//   Very minor changes to documentation to reflect faster sampling rates.
 
 
 // #include "WProgram.h" un-comment for use on older versions of Arduino IDE
 #define LEDpin PIN_PB2
+
 
 #include "emonLibDB.h"
 
@@ -37,8 +41,8 @@
 
 #endif
 // The next 2 lines only required if printing from the library to debug.
-#undef Serial
-#define Serial Serial3
+//#undef Serial
+//#define Serial Serial3
 
 static uint8_t cyclesPerSec = 50;                                      // mains frequency in Hz (i.e. 50 or 60)
 float  datalogPeriodInSeconds = 9.8;                                   // Suggested value for emonCMS
@@ -173,10 +177,10 @@ static constexpr uint8_t ADC0SampDly = 0;                                     //
 static uint8_t   ADC0SampLen;                                                 // Set later
 static uint16_t  ADC0prescaleDivider;                                         // Set later
 
-static constexpr uint16_t ADC0SampLenLineNeutral = 21;                        // Range 0 - 255
+static constexpr uint16_t ADC0SampLenLineNeutral = 18;                        // Range 0 - 255
 static constexpr uint16_t ADC0prescaleDividerLineNeutral = ADC_PRESC_DIV32_gc;
 
-static constexpr uint8_t ADC0SampLenLineLine = 19;                            // Range 0 - 255
+static constexpr uint8_t ADC0SampLenLineLine = 16;                            // Range 0 - 255
 static constexpr uint16_t ADC0prescaleDividerLineLine = ADC_PRESC_DIV48_gc;
 
  /* Possible dividers are 2,4,8,12,16,20,24,28,32,48,64,96,128,256 */
@@ -671,7 +675,7 @@ void EmonLibDB_Init(void)
     }
       
     ADCDuration = int((4.0 / ClockFreq + (15.5 + ADC0SampDly + ADC0SampLen) * ADCDivider / ClockFreq) * ADCScale);
-    // Time in tenths of microseconds for one ADC conversion. 48.8 µs appears realistic for L-N, 69.1 µs for Line-Line. (getReadings takes ~23 ms).
+    // Time in tenths of microseconds for one ADC conversion. 46.1 µs appears realistic for L-N, 59.1 µs for Line-Line. (getReadings takes ~20 to ~ 28 ms).
     
     
     // Build ADC_Sequence array: ADC MPX inputs in scan order,
@@ -777,7 +781,6 @@ void EmonLibDB_Start(void)
 
 void EmonLibDB_getReadings()
 {
-
 
 // Use the 'volatile' variables passed from the ISR.
 
@@ -1128,12 +1131,8 @@ void EmonLibDB_interrupt()
   should be only a few counts.
   */
 
-  {
-    volatile uint32_t temp = 0;
-    muls16x16_32(temp,ADCsample,ADCsample);                            // cumulative sample^2 
-    longCollecting->sumSampleSquared[sample_index] += temp;
-    longCollecting->cumSampleDeltas[sample_index] += ADCsample;
-  }
+  longCollecting->sumSampleSquared[sample_index] += (ADCsample * ADCsample); // cumulative sample^2 
+  longCollecting->cumSampleDeltas[sample_index] += ADCsample;
 
   // deal with activities that are only needed at certain stages of each voltage cycle.
   if (ADC_Sequence[sample_index].adcInPin == 0)                        // use first voltage for defining timing
@@ -1171,11 +1170,8 @@ void EmonLibDB_interrupt()
     uint16_t lastSampleV = ((int16_t)sampleCount - ADC_Sequence[sample_index].pInput->phaseDataV1.relativeLastVsample) & (RAWSAMPLESSIZE-1);
     uint16_t thisSampleV = ((int16_t)sampleCount - ADC_Sequence[sample_index].pInput->phaseDataV1.relativeThisVsample) & (RAWSAMPLESSIZE-1);
     
-    int32_t temp;
-    muls16x16_32(temp,rawSamples[cSample],rawSamples[lastSampleV]);    // cumulative partial powers 
-    longCollecting->sumPA1[sample_index] +=temp;
-    muls16x16_32(temp,rawSamples[cSample],rawSamples[thisSampleV]);  
-    longCollecting->sumPB1[sample_index] += temp;
+    longCollecting->sumPA1[sample_index] += (rawSamples[cSample] * rawSamples[lastSampleV]);    // cumulative partial powers 
+    longCollecting->sumPB1[sample_index] += (rawSamples[cSample] * rawSamples[thisSampleV]);
 
     
     if (ADC_Sequence[sample_index].pInput->vIn1 != ADC_Sequence[sample_index].pInput->vIn2)    // Line-Line load in use
@@ -1184,11 +1180,8 @@ void EmonLibDB_interrupt()
       uint16_t lastSampleV = ((int16_t)sampleCount - ADC_Sequence[sample_index].pInput->phaseDataV2.relativeLastVsample) & (RAWSAMPLESSIZE-1);
       uint16_t thisSampleV = ((int16_t)sampleCount - ADC_Sequence[sample_index].pInput->phaseDataV2.relativeThisVsample) & (RAWSAMPLESSIZE-1);
       
-      int32_t temp;
-      muls16x16_32(temp,rawSamples[cSample],rawSamples[lastSampleV]);  // cumulative partial powers 
-      longCollecting->sumPA2[sample_index] +=temp;
-      muls16x16_32(temp,rawSamples[cSample],rawSamples[thisSampleV]);  
-      longCollecting->sumPB2[sample_index] += temp;
+      longCollecting->sumPA2[sample_index] += (rawSamples[cSample] * rawSamples[lastSampleV]);   // cumulative partial powers 
+      longCollecting->sumPB2[sample_index] += (rawSamples[cSample] * rawSamples[thisSampleV]);
     }
   }
   

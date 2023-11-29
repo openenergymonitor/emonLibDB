@@ -21,7 +21,10 @@
 // @awjlogan for his suggestions regarding memory use;
 // @cbmarkwardt & @dBC for his suggestion to use the AVR Hardware Multiplier.
 
-// Version 1.0.0 6/5/2023 
+// Version 1.0.0 6/5/2023 Initial public release
+// Version 1.0.1 25/11/2023  Hardware 'Fast Multiply' removed - found to be slower. 
+//   ADC0SampLenLineNeutral was 21, ADC0SampLenLineLine was 19. No change to user interface. 
+//   Very minor changes to documentation to reflect faster sampling rates.
                                                                            
 #ifndef EmonLibDB_h
 #define EmonLibDB_h
@@ -88,67 +91,6 @@ void calcPhaseShift(uint8_t lChannel);
 void countAllPulses(void);
 
 enum PulseIn {Pulse=1, Dig, ADC};
-
-// **** A P P L I C A T I O N   N O T E   A V R 2 0 1 ***************************
-// *
-// * Title            : 16bit multiply routines using hardware multiplier
-// * Version          : V2.0
-// * Last updated     : 10 Jun, 2002
-// * Target           : Any AVR with HW multiplier
-// *
-// * Support email    : avr@atmel.com
-// *
-// * DESCRIPTION
-// *   This application note shows a number of examples of how to implement
-// *  16bit multiplication using hardware multiplier. Refer to each of the
-// *  funtions headers for details. The functions included in this file
-// *  are :
-// *
-// *  muls16x16_32  - Signed multiply of two 16bits numbers with 32bits result.
-// *
-// ******************************************************************************
-
-// modified as inline assembly in a C header file for the Arduino by Jose Gama, May 2015
-//
-// Abridged for OEM emonTx4 & emonPi2 by Robert Wall
-//  The full version is available as inlineAVR201def.h
-// ******************************************************************************
-// *
-// * FUNCTION
-// *  muls16x16_32
-// * DECRIPTION
-// *  Signed multiply of two 16bits numbers with 32bits result.
-// * USAGE
-// *  r19:r18:r17:r16 = r23:r22 * r21:r20
-// * STATISTICS
-// *  Cycles :  19 + ret
-// *  Words :    15 + ret
-// *  Register usage: r0 to r2 and r16 to r23 (11 registers)
-// * NOTE
-// *  The routine is non-destructive to the operands.
-// *
-// ******************************************************************************
-#define muls16x16_32(result, multiplicand, multiplier) \
-__asm__ __volatile__ ( \
-"  clr  r2 \n\t" \
-"  muls  %B2, %B1 \n\t" /* (signed)ah * (signed)bh*/ \
-"  movw  %C0, r0 \n\t" \
-"  mul  %A2, %A1 \n\t" /* al * bl*/ \
-"  movw  %A0, r0 \n\t" \
-"  mulsu  %B2, %A1 \n\t" /* (signed)ah * bl*/ \
-"  sbc  %D0, r2 \n\t" \
-"  add  %B0, r0 \n\t" \
-"  adc  %C0, r1 \n\t" \
-"  adc  %D0, r2 \n\t" \
-"  mulsu  %B1, %A2 \n\t" /* (signed)bh * al*/ \
-"  sbc  %D0, r2 \n\t" \
-"  add  %B0, r0 \n\t" \
-"  adc  %C0, r1 \n\t" \
-"  adc  %D0, r2 \n\t" \
-"  clr r1 \n\t" \
-: "=&a" (result) \
-: "a" (multiplicand),  "a" (multiplier) \
-);
 
 
 #endif
