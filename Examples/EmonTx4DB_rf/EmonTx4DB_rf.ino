@@ -4,7 +4,7 @@
 
 Refer to the Application Interface section of the accompanying User Documentation (PDF file) for full details.
 
-Released to accompany emonLibDB, version 1.0.0 6/5/2023 
+Released to accompany emonLibDB, version 1.0.1 22/11/2023 
 
 Due to the limits imposed by the data format required by the radio module, it is necessary to split the data into
 two packets sent consecutively. Each packet is sent from a different NodeID, but both relate to the same datalog period
@@ -150,9 +150,6 @@ void setup()
   *    that apply to current/power inputs being used.                         *
   ****************************************************************************/
 
-/*
-  EmonLibDB_set_pInput(1, 1);                  // CT1, V1
-*/
   EmonLibDB_set_pInput(1, 1);                  // CT2, V2 (etc)
   EmonLibDB_set_pInput(2, 1);
   EmonLibDB_set_pInput(3, 1);
@@ -173,7 +170,7 @@ void setup()
 
   /* How to measure Line-Line loads: */
 /*
-  EmonLibDB_set_pInput(3, 1, 2);               // CT1 between V1 & V2    
+  EmonLibDB_set_pInput(1, 1, 2);               // CT1 between V1 & V2    
   EmonLibDB_set_pInput(2, 2, 3);               // CT2 between V2 & V3
   EmonLibDB_set_pInput(3, 3, 1);               // CT2 between V3 & V1  (etc)  
   EmonLibDB_set_pInput(4, 1, 2);  
@@ -194,8 +191,8 @@ void setup()
 */      
   EmonLibDB_setPulseEnable(true);              // Enable counting on the "Pulse" input
   EmonLibDB_setPulseMinPeriod(20);             // Contact bounce must not last longer than 20 ms
-  // EmonLibDB_setPulseEnable(Dig, true);         // Enable counting on the "Pulse" input
-  // EmonLibDB_setPulseMinPeriod(Dig, 20);        // Contact bounce must not last longer than 20 ms
+  EmonLibDB_setPulseEnable(Dig, true);         // Enable counting on the "Pulse" input
+  EmonLibDB_setPulseMinPeriod(Dig, 20);        // Contact bounce must not last longer than 20 ms
 
   EmonLibDB_datalogPeriod(DATALOG);            // Report every 9.8 s (approx)
   Serial.print("Starting ");
