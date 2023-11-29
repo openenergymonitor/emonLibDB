@@ -16,7 +16,7 @@ https://docs.openenergymonitor.org/electricity-monitoring/ac-power-theory/3-phas
 and
 https://docs.openenergymonitor.org/electricity-monitoring/ac-power-theory/use-in-north-america.html
 
-Released to accompany emonLibDB, version 1.0.0  6/5/2023 
+Released to accompany emonLibDB, version 1.0.1  22/11/2023 
 
 */
 
@@ -87,7 +87,7 @@ void setup()
   ****************************************************************************/
 
   EmonLibDB_set_pInput(1, 1);                  // CT1, V1
-  EmonLibDB_set_pInput(2, 1);                  // CT2, V2 (etc)
+  EmonLibDB_set_pInput(2, 2);                  // CT2, V2 (etc)
   EmonLibDB_set_pInput(3, 1);
   EmonLibDB_set_pInput(4, 1);  
   EmonLibDB_set_pInput(5, 1);
